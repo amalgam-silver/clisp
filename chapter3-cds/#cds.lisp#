@@ -52,4 +52,11 @@
 (defun select (selector-fn)
   (remove-if-not selector-fn *db*))
 
-
+(defun where (&key title artist rating (ripped nil ripped-p))
+  #'(lambda (cd)
+      and(
+          (if title () t)
+          (if artist () t)
+          (if rating () t)
+          (if ripped-p () t)
+          )))
