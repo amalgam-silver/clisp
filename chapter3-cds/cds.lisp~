@@ -1,3 +1,14 @@
+;;;; This a demo of database of cds
+;;;; It's an example in chapter-3 of 'Pratical Common Lisp' written by Peter Seibel
+;;;; Each record contains a title, an artist, a rate and a ripped flag
+;;;; Following methods are supportted:
+;;;; (add-cds): add records of cds, after finish inputing a record,
+;;;;            user will be asked if another need to be input,
+;;;;            end inputing by type 'n'
+;;;; (dump-cd): output all the records of cds
+;;;; (save-db loaction): save all the records into a file
+;;;; (load-db location): read records from a file
+
 (defvar *db* nil)
 
 (defun make-cd (title artist rating ripped)
@@ -38,6 +49,7 @@
     (with-standard-io-syntax
       (setf *db* (read in)))))
 
-
+(defun select (selector-fn)
+  (remove-if-not selector-fn *db*))
 
 
