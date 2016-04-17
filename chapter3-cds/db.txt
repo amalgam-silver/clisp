@@ -1,2 +1,2 @@
 
-((:TITLE "God is a Girl" :ARTIST "Avail" :RATING 8 :RIPPED T) (:TITLE "Goodbye" :ARTIST "Sally" :RATING 5 :RIPPED NIL) (:TITLE "Lemon Tree" :ARTIST "Wang" :RATING 9 :RIPPED T) (:TITLE "Yesterday Once More" :ARTIST "Jone" :RATING 7 :RIPPED NIL)) 
+((:TITLE "Beautiful Girl" :ARTIST "Jone" :RATING 5 :RIPPED NIL) (:TITLE "AlphaGo" :ARTIST "Jone" :RATING 9 :RIPPED NIL) (:TITLE "God is a Girl" :ARTIST "Avail" :RATING 8 :RIPPED T) (:TITLE "Goodbye" :ARTIST "Sally" :RATING 5 :RIPPED NIL) (:TITLE "Lemon Tree" :ARTIST "Wang" :RATING 9 :RIPPED T) (:TITLE "Yesterday Once More" :ARTIST "Jone" :RATING 7 :RIPPED NIL)) 
