@@ -1,0 +1,12 @@
+;;;; This is a demo of test frame
+;;;; It's an example in chapter-9 of 'Pratical Common Lisp' written by Peter Seibel
+
+;;; old method used to test +
+(defun test-+-old()
+  (and
+   (= (+ 1 2) 3)
+   (= (+ -5 4) -1)
+   (= (+ -3 -2) -5)))
+
+   
+(defun test-+())
