@@ -1,0 +1,21 @@
+;;;; This is the final version of the test framework
+;;;; It's an example in chapter-9 of 'Pratical Common Lisp' written by Peter Seibel
+
+(defvar *test-name* nil)
+
+;;
+(defmacro with-gensyms (names &body body)
+  `(let ,(loop for n in names collect `(,n (gensym)))
+     ,body))
+
+(defun report-result (result form)
+  (format t  "~:[Fail~;Pass~] ... ~a : ~a~%" result *test-name* form)
+  result)
+
+(defmacro check (forms)
+  `(progn
+     ,@(loop for f in forms collect `(report-result ,f ',f))))
+
+(defun test-+ ()
+  (check
+   (= (+ 1 2) 3)))

@@ -68,37 +68,74 @@
        ,@(loop for f in forms collect `(unless ,f (setf ,result nil)))
        ,result)))
 
-;; final check
-(defmacro check (&body test-form)
+;; check
+(defmacro check-old2 (&body test-form)
   `(combine-results     
      ,@(loop for f in test-form collect `(report-result-old ,f ',f))))
 
 ;; final text-+
 (defun test-+-old7 ()
-  (check 
+  (check-old2 
     (= (+ 1 2) 3)
     (= (+ -5 4) -1)
     (= (+ -3 -2) -5)))
 
 ;; another test func for *
 (defun test-*-old1 ()
-  (check
+  (check-old2
     (= (* 1 3) 3)
     (= (* -2 3) -6)))
 
 ;; a test func 
-(defun test-arithmetic ()
+(defun test-arithmetic-old ()
   (combine-results
     (test-+-old7)
     (test-*-old1)))
 
+;;; final version
 
+;; a global var for report test branch
+(defvar *test-name* nil)
 
+;; define a func for testing
+(defmacro deftest (name param &body body)
+  `(defun ,name ,param
+     (let ((*test-name* (append *test-name* (list ',name))))
+       ,@body)))
 
+;; final report-result
+(defun report-result (result form)
+  (format t "~:[Fail~;Pass~] ... ~a: ~a~%" result *test-name* form)
+  result)
 
+;; final check
+(defmacro check (&body test-form)
+  `(combine-results     
+     ,@(loop for f in test-form collect `(report-result ,f ',f))))
 
+(deftest test-+ ()
+  (combine-results
+    (check
+      (= (+ 1 2) 3)
+      (= (+ -5 4) -1)
+      (= (+ -2 -3) -5))))
 
+(deftest test-* ()
+  (combine-results
+    (check
+      (= (* 1 3) 3)
+      (= (* -2 3) -6))))
 
+;; a test func 
+(deftest test-arithmetic ()
+  (combine-results
+    (test-+)
+    (test-*)))
+
+;;
+(deftest test-math ()
+  (combine-results
+    (test-arithmetic)))
 
 
 
