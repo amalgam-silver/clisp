@@ -69,14 +69,29 @@
 (defun select (selector-fn)
   (remove-if-not selector-fn *db*))
 
-;; generate a selector-fn 
-(defun where (&key title artist rating (ripped nil ripped-p))
+;; old method to generate a selector-fn 
+(defun where-old (&key title artist rating (ripped nil ripped-p))
   #'(lambda (cd)
       (and 
        (if title    (equal (getf cd :title)  title)  t)
        (if artist   (equal (getf cd :artist) artist) t)
        (if rating   (equal (getf cd :rating) rating) t)
        (if ripped-p (equal (getf cd :ripped) ripped) t))))
+
+;; generate a expression which get the value of field in cd and compared with value 
+(defun make-comparision (field value)
+  `(equal (getf cd ,field) ,value))
+
+;;generate a comparision list using make-comparision
+(defun make-comparision-list (fields)
+  (loop while fields
+       collecting (make-comparision (pop fields) (pop fields))))
+
+;; generate a selector-fn
+(defmacro where (&rest clauses)
+  `#'(lambda (cd)
+       (and
+        ,@(make-comparision-list clauses))))
 
 ;; update records in *db* which match selector-fn
 (defun update (selector-fn &key title artist rating (ripped nil ripped-p))
